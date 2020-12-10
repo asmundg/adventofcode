@@ -1,5 +1,6 @@
 preamble = 25
 
+
 def recalculate(numbers):
     deps = set()
     for a in numbers:

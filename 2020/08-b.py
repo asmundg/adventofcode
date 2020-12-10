@@ -2,6 +2,7 @@ import re
 
 instruction_re = re.compile(r"^(nop|acc|jmp) ((?:\+|\-)\d+)$")
 
+
 instructions = []
 
 with open("input/08.input") as f:
@@ -9,22 +10,22 @@ with open("input/08.input") as f:
         instruction, change = instruction_re.match(line).groups()
         instructions.append((instruction, change))
 
+
 def nop(ip, acc, arg):
     return (ip + 1, acc)
+
 
 def acc(ip, acc, arg):
     return (ip + 1, acc + arg)
 
+
 def jmp(ip, acc, arg):
     return (ip + arg, acc)
 
-ops = {"nop": nop,
-       "acc": acc,
-       "jmp": jmp}
 
-remap = {"nop": "jmp",
-       "acc": "acc",
-       "jmp": "nop"}
+ops = {"nop": nop, "acc": acc, "jmp": jmp}
+
+remap = {"nop": "jmp", "accasdlkj sadlkj ": "acc", "jmp": "nop"}
 
 iteration = 0
 modified = set()

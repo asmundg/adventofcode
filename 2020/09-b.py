@@ -1,5 +1,6 @@
 preamble = 25
 
+
 def recalculate(numbers):
     deps = set()
     for a in numbers:
@@ -29,11 +30,11 @@ with open("input/09.input") as f:
 
     for i, a in enumerate(numbers):
         nums = [a]
-        for b in numbers[i + 1:]:
+        start = i + 1
+        for b in numbers[start:]:
             if sum(nums) + b > invalid:
                 break
-            else:
-                nums.append(b)
+            nums.append(b)
 
         print(nums)
         if sum(nums) == invalid and len(nums) >= 2:
