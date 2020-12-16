@@ -1,0 +1,11 @@
+class: 0-1 or 4-20
+row: 0-5 or 8-19
+seat: 0-15 or 16-20
+
+your ticket:
+11,12,13
+
+nearby tickets:
+3,9,20
+15,1,5
+5,14,9
