@@ -56,13 +56,11 @@ def fits(layouts: List[Layout], layout: Layout, sides):
     ).all()
 
 
-tried = set()
+TRIED = set()
 
 
 def solve(tiles: Set[Tile], layouts: List[Layout], sides):
-    prefix = "  " * len(layouts)
-
-    print(prefix, len(tiles), [(layout.tile.id) for layout in layouts])
+    print("  " * len(layouts), len(tiles), [(layout.tile.id) for layout in layouts])
 
     if not tiles:
         return layouts
@@ -79,7 +77,7 @@ def solve(tiles: Set[Tile], layouts: List[Layout], sides):
             + [tile.id, "-"]
             + sorted(tile.id for tile in tiles)
         )
-        if key in tried:
+        if key in TRIED:
             continue
 
         for layout in tile.layouts:
@@ -92,7 +90,7 @@ def solve(tiles: Set[Tile], layouts: List[Layout], sides):
                 if solution:
                     return solution
         else:
-            tried.add(key)
+            TRIED.add(key)
 
 
 def to_images(layouts):
