@@ -32,8 +32,6 @@ def data():
 
 
 def safe_ingredients(counts: Count):
-    print(counts)
-
     unsafe = set()
     for allergen in counts.allergens:
         unsafe.update(
@@ -62,16 +60,14 @@ def safe_ingredients(counts: Count):
     )
 
 
-def part2(counts: Count):
+def match_ingredients(counts: Count):
     allergens = sorted(
         counts.allergens, key=lambda name: counts.allergens[name], reverse=True
     )
     match = {}
-    # Hope everything has a unique match so we don't have to try
-    # permutations.
+    # Assume we can identify at least one certain mapping per
+    # round. E.g. no permutation attempts.
     while len(match) < len(allergens):
-        # Find the ingredient for most prevalent allergen, that can be
-        # uniquely determined.
         for allergen in allergens:
             target = counts.allergens[allergen]
             candidates = [
@@ -80,7 +76,6 @@ def part2(counts: Count):
                 if counts.contents[allergen][ingredient] == target
                 and ingredient not in match
             ]
-            print(allergen, counts.allergens[allergen], len(candidates))
             if len(candidates) == 1:
                 match[candidates[0]] = allergen
         print(match)
@@ -89,9 +84,10 @@ def part2(counts: Count):
 
 def main():
     d = data()
-    i = safe_ingredients(d)
-    print(i)
-    print(part2(d))
+    part1 = safe_ingredients(d)
+    part2 = match_ingredients(d)
+    print(part1)
+    print(part2)
 
 
 main()
