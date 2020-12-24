@@ -71,7 +71,7 @@ def iterate(tiles):
 
 
 def iterate_tiles(tiles, iterations):
-    for i in range(iterations):
+    for _ in range(iterations):
         tiles = iterate(tiles)
     return tiles
 
