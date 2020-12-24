@@ -56,16 +56,16 @@ def iterate(tiles):
     new_tiles = set()
     for tile in tiles:
         neighbours = neighbour_coordinates(tile)
-        live_neighbours = len([c for c in neighbours if c in tiles])
-        if 0 < live_neighbours <= 2:
+        if 0 < len([c for c in neighbours if c in tiles]) <= 2:
             new_tiles.add(tile)
+
         for neighbour in neighbours:
-            if neighbour not in tiles:
-                live_neighbours = len(
-                    [c for c in neighbour_coordinates(neighbour) if c in tiles]
-                )
-                if live_neighbours == 2:
-                    new_tiles.add(neighbour)
+            if (
+                neighbour not in tiles
+                and len([c for c in neighbour_coordinates(neighbour) if c in tiles])
+                == 2
+            ):
+                new_tiles.add(neighbour)
 
     return new_tiles
 
