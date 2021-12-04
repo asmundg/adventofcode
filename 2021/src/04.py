@@ -1,5 +1,4 @@
 import os
-import pprint
 
 
 def data(fname):
@@ -23,13 +22,11 @@ def columns(board):
 
 def game(numbers, boards):
     for num in numbers:
-        print(num)
         for board in boards:
             for row in board:
                 for pos in range(len(row)):
                     if row[pos] == num:
                         row[pos] = None
-                        pprint.pprint(board)
 
                         if len([el for el in row if el is None]) == 5:
                             return num, board
@@ -53,7 +50,6 @@ def solve2(path):
     numbers, boards = data(path)
     while True:
         num, winner = game(numbers, boards)
-        pprint.pprint(winner)
         if len(boards) == 1:
             break
 
