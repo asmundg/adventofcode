@@ -19,7 +19,7 @@ def check_line(line):
     stack = []
 
     for char in line:
-        if char in match.keys():
+        if char in match:
             if stack[-1] == match[char]:
                 stack.pop()
             else:
@@ -44,7 +44,7 @@ def complete_line(line):
     stack = []
 
     for char in line:
-        if char in match.keys():
+        if char in match:
             stack.pop()
         else:
             stack.append(char)
