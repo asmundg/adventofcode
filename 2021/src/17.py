@@ -15,11 +15,12 @@ def solve2(x, y):
     min_y = y[0]
     max_x = x[1]
 
-    hits = []
-    for try_y in range(min_y, max_y + 1):
-        for try_x in range(max_x + 1):
-            if hit(try_x, try_y, x, y):
-                hits.append((try_x, try_y))
+    hits = [
+        (try_x, try_y)
+        for try_x in range(max_x + 1)
+        for try_y in range(min_y, max_y + 1)
+        if hit(try_x, try_y, x, y)
+    ]
     print(len(hits))
 
 
