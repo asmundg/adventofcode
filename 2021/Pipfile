@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 python-lsp-server = {extras = ["all"], version = "*"}
-black = "*"
 virtualenv = "*"
-
-[dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[dev-packages]
+black = "==21.12b0"
