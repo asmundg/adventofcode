@@ -83,7 +83,7 @@ def solve2(nums):
 def magnitude(node):
     return (
         node
-        if type(node) is int
+        if isinstance(node, int)
         else (3 * magnitude(node["left"])) + (2 * magnitude(node["right"]))
     )
 
@@ -103,11 +103,11 @@ def reduce(node):
 
 def explode(node, pos, depth, root):
     # Leaf node, no eplosion
-    if type(node) is int:
+    if isinstance(node, int):
         return pos + 1
 
     # This is a literal pair, and we're too deep
-    if depth >= 4 and type(node["left"]) is int and type(node["right"]) is int:
+    if depth >= 4 and isinstance(node["left"], int) and isinstance(node["right"], int):
         try:
             inc(root, -1, pos, node["left"]) if pos >= 0 else None
         except Done:
@@ -124,21 +124,21 @@ def explode(node, pos, depth, root):
 
     try:
         pos = explode(node["left"], pos, depth + 1, root)
-    except Explode as e:
+    except Explode as exc:
         node["left"] = 0
-        raise Rerun()
+        raise Rerun() from exc
 
     try:
         pos = explode(node["right"], pos, depth + 1, root)
-    except Explode as e:
+    except Explode as exc:
         node["right"] = 0
-        raise Rerun()
+        raise Rerun() from exc
 
     return pos
 
 
 def inc(node, pos, target, num):
-    if type(node) is int:
+    if isinstance(node, int):
         return pos + 1
 
     pos = inc(node["left"], pos, target, num)
@@ -160,10 +160,10 @@ def inc(node, pos, target, num):
 
 def split(node):
     # Literal, no split
-    if type(node) is int:
+    if isinstance(node, int):
         return
 
-    if type(node["left"]) is int and node["left"] >= 10:
+    if isinstance(node["left"], int) and node["left"] >= 10:
         node["left"] = {
             "left": math.floor(node["left"] / 2),
             "right": math.ceil(node["left"] / 2),
@@ -172,7 +172,7 @@ def split(node):
 
     split(node["left"])
 
-    if type(node["right"]) is int and node["right"] >= 10:
+    if isinstance(node["right"], int) and node["right"] >= 10:
         node["right"] = {
             "left": math.floor(node["right"] / 2),
             "right": math.ceil(node["right"] / 2),
