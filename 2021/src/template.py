@@ -3,7 +3,11 @@ import os
 
 def read_data(fname):
     with open(fname, encoding="utf-8") as handle:
-        return [line.strip() for line in handle.readlines()]
+        return parse(handle.readlines())
+
+
+def parse(lines):
+    return [line.strip() for line in lines]
 
 
 def solve(data):
