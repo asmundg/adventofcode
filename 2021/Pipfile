@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 python-lsp-server = {extras = ["all"], version = "*"}
 virtualenv = "*"
+pytest = "*"
+pytest-watch = "*"
 
 [requires]
 python_version = "3.9"
