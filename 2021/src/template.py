@@ -14,5 +14,10 @@ def solve(data):
     pass
 
 
-solve(read_data(os.path.join(os.path.dirname(__file__), "input/00.test")))
-solve(read_data(os.path.join(os.path.dirname(__file__), "input/00.input")))
+def test_something():
+    assert False
+
+
+if __name__ == "__main__":
+    solve(read_data(os.path.join(os.path.dirname(__file__), "input/00.test")))
+    solve(read_data(os.path.join(os.path.dirname(__file__), "input/00.input")))
