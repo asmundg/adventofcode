@@ -8,6 +8,8 @@ some heuristic for selecting the best moves though, so we still end up
 trying _a lot_ of combinations.
 """
 import copy
+from itertools import count
+import heapq
 
 
 def solve(data):
@@ -19,6 +21,7 @@ def solve2(data):
 
 
 COST = {"A": 1, "B": 10, "C": 100, "D": 1000}
+COUNT = count()
 
 
 def available_moves(pos, occupied, depth=2):
@@ -79,12 +82,12 @@ def in_right_place(pos, occupied):
 
 
 def walk(occupied, depth=2):
-    search = [(occupied, 0)]
+    search = [(0, next(COUNT), occupied)]
     best = {}
     best_end = 99999999999999
 
     while search:
-        occupied, score = search.pop(-1)
+        score, _, occupied = heapq.heappop(search)
         for pos, shrimp in occupied.items():
             for move in available_moves(pos, occupied, depth):
                 new_occupied = copy.deepcopy(occupied)
@@ -111,7 +114,7 @@ def walk(occupied, depth=2):
                     continue
 
                 best[key] = new_score
-                search.append((new_occupied, new_score))
+                heapq.heappush(search, (new_score, next(COUNT), new_occupied))
 
     return best_end
 
