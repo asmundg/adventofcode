@@ -1,3 +1,12 @@
+"""Crossed Wires
+
+If we convert the input to a set of vectors, it's straight forward to
+figure out when any of them intersect. I'm sure there is some tidier
+math we can apply here, but since all the crossings are perpendicular,
+just straight forward comparison between x and y coordinates works
+fine.
+"""
+
 import os
 
 
