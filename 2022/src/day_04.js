@@ -9,7 +9,7 @@ function contains(a, b) {
 }
 
 function overlaps(a, b) {
-  return a[0] <= b[1] && a[1] >= b[0];
+  return a[1] >= b[0] && b[1] >= a[0];
 }
 
 function solve1(input) {
@@ -32,7 +32,7 @@ function solve2(input) {
   count = 0;
   for (const line of lines) {
     const [a, b] = parse(line);
-    if (overlaps(a, b) || overlaps(b, a)) {
+    if (overlaps(a, b)) {
       count++;
     }
   }
