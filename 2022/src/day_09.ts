@@ -5,10 +5,12 @@
  * complex by adding more knots in part 2, since that just breaks down
  * to performing the same logic for additional pairs of knots.
  */
-const fs = require("fs");
-const path = require("path");
+import * as fs from "fs";
+import * as path from "path";
 
-function parse(input) {
+type Point = [number, number];
+
+function parse(input: string) {
   return input
     .trim()
     .split("\n")
@@ -18,13 +20,13 @@ function parse(input) {
     });
 }
 
-function touches(h, t) {
+function touches(h: Point, t: Point): boolean {
   return (
     t[0] >= h[0] - 1 && t[0] <= h[0] + 1 && t[1] >= h[1] - 1 && t[1] <= h[1] + 1
   );
 }
 
-function follow(h, t) {
+function follow(h: Point, t: Point): Point {
   if (touches(h, t)) {
     return t;
   }
@@ -34,9 +36,11 @@ function follow(h, t) {
   return [new_t0, new_t1];
 }
 
-function solve(input, n_knots) {
+function solve(input: string, n_knots: number) {
   const moves = parse(input);
-  const knots = new Array(n_knots).fill(0).map((_) => [0, 0]);
+  const knots: [number, number][] = new Array(n_knots)
+    .fill(0)
+    .map((_) => [0, 0]);
   const visits = new Set();
 
   for (const [d, n] of moves) {
@@ -67,17 +71,21 @@ function solve(input, n_knots) {
   return visits.size;
 }
 
-function solve1(input) {
+function solve1(input: string) {
   return solve(input, 2);
 }
 
-function solve2(input) {
+function solve2(input: string) {
   return solve(input, 10);
 }
 
-const input_base = path.basename(__filename, ".js").split("_")[1];
-console.log(solve1(fs.readFileSync(`input/${input_base}.test`, "utf8")));
-console.log(solve1(fs.readFileSync(`input/${input_base}.input`, "utf8")));
+const input_base = path.resolve(
+  __dirname,
+  "input",
+  `${__filename.split("_")[1].split(".")[0]}`
+);
+console.log(solve1(fs.readFileSync(`${input_base}.test`, "utf8")));
+console.log(solve1(fs.readFileSync(`${input_base}.input`, "utf8")));
 
-console.log(solve2(fs.readFileSync(`input/${input_base}.test`, "utf8"), 14));
-console.log(solve2(fs.readFileSync(`input/${input_base}.input`, "utf8"), 14));
+console.log(solve2(fs.readFileSync(`${input_base}.test`, "utf8")));
+console.log(solve2(fs.readFileSync(`${input_base}.input`, "utf8")));
