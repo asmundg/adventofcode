@@ -1,3 +1,25 @@
+"""Day 18: Boiling Boulders.
+
+That's it - I'm switching to python. Set operations are so much
+simpler than in JS. We could just build the necessary abstractions,
+but using different languages is more fun. (At some point I'll redo
+these in Haskell).
+
+This can be simply solved by brute force, although the runtime is on
+the order of seconds for part 2 and could probably be nicer.
+
+Counting surfaces without removing air bubbles can be done by starting
+at 6 and subtracting a surface for each connected neighbour for each
+node.
+
+Part 2 is the same, but we additionally find air bubbles by scanning
+the complete volume and seeing if we can reach outside from all
+points. If we cannot, the point is trapped and we can remove it from
+the surface count. Since air bubbles can be larger than one cube, we
+need to find the surface of the whole volume before subtracting,
+reusing part 1.
+"""
+
 import os
 from typing import Set, Tuple
 
