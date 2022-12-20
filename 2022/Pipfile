@@ -4,10 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-lsp-server = {extras = ["all"], version = "*"}
 virtualenv = "*"
 pytest = "*"
 pytest-watch = "*"
+python-lsp-server = {extras = ["all"], version = "*"}
+pylsp-mypy = "*"
+python-lsp-black = "*"
 
 [requires]
 python_version = "3.9"
