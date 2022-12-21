@@ -12,11 +12,13 @@ from typing import Dict, Optional, Tuple
 class Node:
     name: str
     op: str
-    operands: Tuple["Node", "Node"]
-    cached: Optional[int] = None
+    operands: Optional[Tuple["Node", "Node"]]
+    cached: Optional[np.poly1d] = None
 
 
-def parse(fname: str, override: Dict[str, Tuple[int]] = None) -> Dict[str, Node]:
+def parse(
+    fname: str, override: Optional[Dict[str, np.poly1d]] = None
+) -> Dict[str, Node]:
     override = override or {}
     lookup: Dict[str, Node] = {}
     deps: Dict[str, Tuple[str, str]] = {}
@@ -32,7 +34,7 @@ def parse(fname: str, override: Dict[str, Tuple[int]] = None) -> Dict[str, Node]
             if m:
                 lookup[m.group(1)] = Node(
                     name=m.group(1),
-                    op=None,
+                    op="",
                     operands=None,
                     cached=(
                         np.poly1d(
@@ -55,10 +57,13 @@ def parse(fname: str, override: Dict[str, Tuple[int]] = None) -> Dict[str, Node]
     return lookup
 
 
-def calc(node: Node) -> Tuple[int]:
+def calc(node: Node) -> np.poly1d:
     val = node.cached
     if val is not None:
         return val
+
+    if node.operands is None:
+        raise Exception("Invalid node", node)
 
     a = calc(node.operands[0])
     b = calc(node.operands[1])
@@ -71,6 +76,8 @@ def calc(node: Node) -> Tuple[int]:
         val = a * b
     elif node.op == "/":
         val = (a / b)[0]
+    else:
+        raise Exception("Invalid operation", node)
 
     node.cached = val
     return val
@@ -83,7 +90,11 @@ def solve(fname: str) -> int:
 
 def solve2(fname: str) -> int:
     nodes = parse(fname, override={"humn": np.poly1d([1, 0])})
-    a, b = calc(nodes["root"].operands[0]), calc(nodes["root"].operands[1])
+    root = nodes["root"]
+    if not root.operands:
+        raise Exception("Invalid root", root)
+
+    a, b = calc(root.operands[0]), calc(root.operands[1])
     x, comp = (a, b) if len(a) > 0 else (b, a)
     return int(((comp - x[0]) / x[1])[0])
 
