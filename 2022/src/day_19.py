@@ -1,11 +1,10 @@
 """Day 19
 """
 
-import itertools
+from dataclasses import dataclass
 import os
 import re
 from typing import Dict, List
-from tqdm import tqdm
 
 
 def parse(fname: str) -> List[Dict[str, Dict[str, int]]]:
@@ -35,10 +34,6 @@ def parse(fname: str) -> List[Dict[str, Dict[str, int]]]:
     return blueprints
 
 
-def can_build(template, resources):
-    return False not in [resources[res] >= cost for res, cost in template.items()]
-
-
 def build(template, resources):
     for res, cost in template.items():
         resources[res] -= cost
@@ -52,63 +47,132 @@ def collect(resources, robots):
     return resources
 
 
+@dataclass
+class Best:
+    value: int
+
+
+@dataclass
+class State:
+    time: int
+    resources: Dict[str, int]
+    robots: Dict[str, int]
+    best: Best
+
+
+def run_plan(blueprint, state: State, target, target_robot):
+    if state.time == target:
+        if state.resources["geode"] > state.best.value:
+            state.best.value = state.resources["geode"]
+        return state.resources["geode"]
+
+    if (
+        state.robots["geode"] * (target - state.time + 1)
+        + sum(range(target - state.time))
+        + state.resources["geode"]
+        <= state.best.value
+    ):
+        return 0
+
+    if all(
+        state.resources[res] >= cost for res, cost in blueprint[target_robot].items()
+    ):
+        build(blueprint[target_robot], state.resources)
+        new_robots = state.robots.copy()
+        new_robots[target_robot] += 1
+
+        plans = []
+        for (robot_type, dependency) in (
+            ("geode", "obsidian"),
+            ("obsidian", "clay"),
+            ("clay", "ore"),
+            ("ore", ""),
+        ):
+            if (not dependency or new_robots.get(dependency, 0) > 0) and (
+                robot_type == "geode"
+                or new_robots[robot_type]
+                < max(template.get(robot_type, 0) for template in blueprint.values())
+            ):
+                plans.append(
+                    run_plan(
+                        blueprint,
+                        State(
+                            state.time + 1,
+                            collect(state.resources, state.robots),
+                            new_robots,
+                            state.best,
+                        ),
+                        target,
+                        robot_type,
+                    )
+                )
+
+        return max(plans)
+
+    # Waiting
+    return run_plan(
+        blueprint,
+        State(
+            state.time + 1,
+            collect(state.resources, state.robots),
+            state.robots,
+            state.best,
+        ),
+        target,
+        target_robot,
+    )
+
+
 def solve(fname: str) -> int:
     blueprints = parse(fname)
 
     score = 0
     for i, blueprint in enumerate(blueprints, 1):
-        print("Blueprint", i)
-        bar = 0
-        sequences = [
-            (
-                {"ore": 1, "clay": 0, "obsidian": 0, "geode": 0},
-                {"ore": 0, "clay": 0, "obsidian": 0, "geode": 0},
-            )
-        ]
-        for step in range(1, 25):
-            print("step", step, len(sequences))
-            pruned_sequences = []
-            for robots, resources in sequences:
-                if robots["geode"] > bar:
-                    bar = robots["geode"]
-                    print("New bar", bar)
-                    pruned_sequences = []
-                if robots["geode"] < bar:
-                    continue
-
-                for robot, cost in blueprint.items():
-                    if can_build(cost, resources):
-                        new_robots = robots.copy()
-                        new_robots[robot] += 1
-                        new_resources = build(cost, collect(resources, robots))
-                        if (
-                            step < 22
-                            or robots["geode"] > 0
-                            or (
-                                step == 22
-                                and (
-                                    new_robots["geode"] > 0
-                                    or can_build(blueprint["geode"], new_resources)
-                                )
-                            )
-                            or (step == 23 and new_robots["geode"] > 0)
-                        ):
-                            pruned_sequences.append((new_robots, new_resources))
-
-                # Sequence without builds
-                if step < 23 or robots["geode"] > 0:
-                    pruned_sequences.append((robots, collect(resources, robots)))
-            sequences = pruned_sequences
-
-        best = (
-            max([resources["geode"] for robots, resources in sequences])
-            if sequences
-            else 0
+        best = max(
+            [
+                run_plan(
+                    blueprint,
+                    State(
+                        0,
+                        {"ore": 0, "clay": 0, "obsidian": 0, "geode": 0},
+                        {"ore": 1, "clay": 0, "obsidian": 0, "geode": 0},
+                        Best(0),
+                    ),
+                    24,
+                    target_bot,
+                )
+                for target_bot in ("ore", "clay")
+            ]
         )
-        print(best)
-        quality = i * best
-        score += quality
-        print(i, best, quality, score)
+
+        score += i * best
+
+    return score
+
+
+def solve2(fname: str) -> int:
+    blueprints = parse(fname)
+
+    score = 1
+    for i, blueprint in enumerate(blueprints[:3], 1):
+        best = max(
+            [
+                run_plan(
+                    blueprint,
+                    State(
+                        0,
+                        {"ore": 0, "clay": 0, "obsidian": 0, "geode": 0},
+                        {"ore": 1, "clay": 0, "obsidian": 0, "geode": 0},
+                        Best(0),
+                    ),
+                    32,
+                    target_bot,
+                )
+                for target_bot in ("ore", "clay")
+            ]
+        )
+
+        score *= best
 
     return score
 
@@ -118,5 +182,5 @@ base = os.path.join(os.path.dirname(__file__), "input", f"{day}")
 print(solve(f"{base}.test"))
 print(solve(f"{base}.input"))
 
-# print(solve2(f"{base}.test"))
-# print(solve2(f"{base}.input"))
+print(solve2(f"{base}.test"))
+print(solve2(f"{base}.input"))
