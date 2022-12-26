@@ -1,4 +1,20 @@
-"""Day 19
+"""Day 19: Not Enough Minerals
+
+This was way harder than it should have been. At its core, this
+another depth-first search with some accumulated state. We simulate
+all decisions points until we reach the time quota. The decision is
+which robot to build, which might cause waiting for some rounds. Which
+is fine, since that is optimal in some cases. Not making a decision in
+each round saves us from nonsense paths where we wait randomly.
+
+A major optimization comes from figuring out that since we can only
+build one robot per turn, we will never need to produce more resources
+than is consumed by construction of the most expensive robot. This
+lets us prune a lot of trees.
+
+Similarly, if we cannot possibly produce more geodes in the remaining
+rounds, even assuming that we can construct one geode bot per round,
+we can also prune the tree.
 """
 
 from dataclasses import dataclass

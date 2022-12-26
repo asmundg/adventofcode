@@ -1,4 +1,13 @@
-"""Day 24
+"""Day 24: Blizzard Basin
+
+I started implementing a depth-first search here. Which works, but is
+slow - even with aggressive pruning. Then, after manually debugging, I
+realized that this is just a breadth-first search, where we remove
+visited nodes as they get covered by blizzards. In practice, we track
+all locations that could contain an elf at each point in time.
+
+This trivially locates the first round in which we can reach the
+target, and also makes the additional trips simple.
 """
 
 import os

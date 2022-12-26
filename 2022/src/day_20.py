@@ -8,7 +8,6 @@ Realizing that finding a high index moodulo the length of the mixed
 sequence is trivial if we sort the array first meant part 2 was
 trivial, as incrementing or decrementing arbitrary numbers doesn't
 cause additional cost, as compared to following the linked list.
-
 """
 
 import os

@@ -1,4 +1,10 @@
-"""Day 22:
+"""Day 22: Monkey Map
+
+Mechanical state manipulation, with some caveats when falling off the
+map. In part 1, we just reverse direction until we hit the other
+edge. In part 2, we have to figure out rotations. There might be some
+clever approach, but I just printed the faces, folded them and defined
+the connection for each cube edge.
 """
 
 from dataclasses import dataclass

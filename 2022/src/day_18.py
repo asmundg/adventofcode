@@ -21,10 +21,12 @@ reusing part 1.
 """
 
 import os
-from typing import Set, Tuple
+from typing import Set, Tuple, TypeAlias
+
+Coord3D: TypeAlias = Tuple[int, int, int]
 
 
-def parse(fname: str) -> Set[Tuple[int]]:
+def parse(fname: str) -> Set[Coord3D]:
     with open(fname, encoding="utf-8") as handle:
         return set(
             [
@@ -34,7 +36,7 @@ def parse(fname: str) -> Set[Tuple[int]]:
         )
 
 
-def neighbours(point: Tuple[int]) -> Set[Tuple[int]]:
+def neighbours(point: Coord3D) -> Set[Coord3D]:
     (x, y, z) = point
     return set(
         [
@@ -48,7 +50,7 @@ def neighbours(point: Tuple[int]) -> Set[Tuple[int]]:
     )
 
 
-def surfaces(points: Set[Tuple[int]]) -> int:
+def surfaces(points: Set[Coord3D]) -> int:
     unconnected = {p: 6 for p in points}
 
     for n in (neighbours(point) for point in points):
@@ -60,12 +62,12 @@ def surfaces(points: Set[Tuple[int]]) -> int:
 
 
 def is_inside(
-    point: Tuple[int],
-    points: Set[Tuple[int]],
-    min_borders: Tuple[int],
-    max_borders: Tuple[int],
-    inside: Set[Tuple[int]],
-    outside: Set[Tuple[int]],
+    point: Coord3D,
+    points: Set[Coord3D],
+    min_borders: Coord3D,
+    max_borders: Coord3D,
+    inside: Set[Coord3D],
+    outside: Set[Coord3D],
 ):
     visited = set([point])
     search = neighbours(point)
@@ -103,8 +105,8 @@ def solve2(fname: str) -> int:
     min_y = min([y for (x, y, z) in points])
     max_z = max([z for (x, y, z) in points])
     min_z = min([z for (x, y, z) in points])
-    inside = set()
-    outside = set()
+    inside: Set[Coord3D] = set()
+    outside: Set[Coord3D] = set()
     for point in [
         (x, y, z) for x in range(max_x) for y in range(max_y) for z in range(max_z)
     ]:

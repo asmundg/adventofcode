@@ -1,4 +1,7 @@
-"""Day 25
+"""Day 25: Full of Hot Air
+
+Base conversion. Python might have some built-in mechanism, but just
+implementing it felt faster.
 """
 
 import os

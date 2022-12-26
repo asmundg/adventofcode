@@ -1,4 +1,10 @@
-"""Day 23
+"""Day 23: Unstable Diffusion
+
+This is a two-phase commit, using sets. In each round, we track viable
+target locations per elf. If a target only has a single elf proposing
+it, the move happens. If not, all proposers stay in place. Creating a
+new set for each round, avoids concurrency issues with in-place
+updates.
 """
 
 import itertools

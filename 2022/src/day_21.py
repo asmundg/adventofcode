@@ -1,4 +1,13 @@
-"""Day 21:
+"""Day 21: Monkey Math
+
+This is an evaluation tree. I'm not sure the caching is actually
+necessary, but I was worried abuot reuse of subtrees and
+pre-optimized.
+
+If we use polynomials, part 2 is exactly the same as part 1 - the
+latter being just zero polynomial. I didn't check whether we actually
+get higher order polynomials, but farming out the work to numpy means
+we would be able to handle those transparently.
 """
 
 from dataclasses import dataclass
@@ -48,7 +57,6 @@ def parse(
                         else override[m.group(1)]
                     ),
                 )
-                continue
                 continue
             raise Exception("Invalid definition", line)
     for node in lookup.values():
