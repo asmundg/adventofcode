@@ -9,7 +9,16 @@ def increment(s: str) -> str:
         return "a"
 
     n = ord(s[-1]) + 1
-    return s[:-1] + chr(n) if n <= 122 else increment(s[:-1]) + "a"
+    candidate = s[:-1] + chr(n) if n <= 122 else increment(s[:-1]) + "a"
+    for illegal in ("i", "l", "o"):
+        if illegal in candidate:
+            idx = candidate.index(illegal)
+            return (
+                candidate[:idx]
+                + chr(ord(illegal) + 1)
+                + "a" * (len(candidate) - 1 - idx)
+            )
+    return candidate
 
 
 def valid(s: str) -> bool:
@@ -38,9 +47,9 @@ assert increment("a") == "b"
 assert increment("az") == "ba"
 assert increment("zz") == "aaa"
 
-assert valid("hijklmmn") == False
-assert valid("abbceffg") == False
-assert valid("abbcegjk") == False
+assert not valid("hijklmmn")
+assert not valid("abbceffg")
+assert not valid("abbcegjk")
 
 assert solve("abcdefgh") == "abcdffaa"
 assert solve("ghijklmn") == "ghjaabcc"
