@@ -26,7 +26,7 @@ def solve(containers: List[int], goal: int, path: List[int]) -> List[List[int]]:
     return paths
 
 
-def solve2(paths: List[List[int]]) -> List[int]:
+def solve2(paths: List[List[int]]) -> List[List[int]]:
     min_containers = min(len(p) for p in paths)
     return [p for p in paths if len(p) == min_containers]
 
