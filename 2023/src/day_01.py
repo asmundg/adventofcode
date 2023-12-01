@@ -47,11 +47,19 @@ def solve(lines: List[str]):
     return sum([int(line[0] + line[-1]) for line in lines])
 
 
-if __name__ == "__main__":
-    day = os.path.basename(__file__).split(".")[0].split("_")[1]
-    base = os.path.join(os.path.dirname(__file__), "input", f"{day}")
-    print(solve(parse(f"{base}.test")))
-    print(solve(parse(f"{base}.input")))
+def test_part1():
+    assert solve(parse(f"{file_base()}.test")) == 142
 
-    print(solve(parse(f"{base}.test2", parse_words=True)))
-    print(solve(parse(f"{base}.input", parse_words=True)))
+
+def test_part2():
+    assert solve(parse(f"{file_base()}.test2", parse_words=True)) == 281
+
+
+def file_base() -> str:
+    day = os.path.basename(__file__).split(".")[0].split("_")[1]
+    return os.path.join(os.path.dirname(__file__), "input", f"{day}")
+
+
+if __name__ == "__main__":
+    print(solve(parse(f"{file_base()}.input")))
+    print(solve(parse(f"{file_base()}.input", parse_words=True)))
