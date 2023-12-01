@@ -7,6 +7,7 @@ the lo/high indexes was more robust.
 """
 
 import os
+from textwrap import dedent
 
 from typing import List
 
@@ -25,21 +26,28 @@ WORDS = [
 ]
 
 
-def parse(fname: str, parse_words: bool = False) -> List[str]:
-    lines: List[str] = []
+def read_data() -> str:
+    day = os.path.basename(__file__).split(".")[0].split("_")[1]
+    fname = os.path.join(os.path.dirname(__file__), "input", f"{day}.input")
+
     with open(fname, encoding="utf-8") as handle:
-        for line in handle.read().strip().split("\n"):
-            tokens = NUMS if not parse_words else NUMS + WORDS
-            first = ("", len(line))
-            last = ("", -1)
-            for token in tokens:
-                idx = line.find(token)
-                if -1 < idx < first[1]:
-                    first = (token if token in NUMS else str(WORDS.index(token)), idx)
-                idx = line.rfind(token)
-                if idx > last[1]:
-                    last = (token if token in NUMS else str(WORDS.index(token)), idx)
-            lines.append(first[0] + last[0])
+        return handle.read().strip()
+
+
+def parse(data: str, parse_words: bool = False) -> List[str]:
+    lines: List[str] = []
+    for line in data.split("\n"):
+        tokens = NUMS if not parse_words else NUMS + WORDS
+        first = ("", len(line))
+        last = ("", -1)
+        for token in tokens:
+            idx = line.find(token)
+            if -1 < idx < first[1]:
+                first = (token if token in NUMS else str(WORDS.index(token)), idx)
+            idx = line.rfind(token)
+            if idx > last[1]:
+                last = (token if token in NUMS else str(WORDS.index(token)), idx)
+        lines.append(first[0] + last[0])
     return lines
 
 
@@ -48,18 +56,31 @@ def solve(lines: List[str]):
 
 
 def test_part1():
-    assert solve(parse(f"{file_base()}.test")) == 142
+    data = dedent(
+        """\
+        1abc2
+        pqr3stu8vwx
+        a1b2c3d4e5f
+        treb7uchet"""
+    )
+
+    assert solve(parse(data)) == 142
 
 
 def test_part2():
-    assert solve(parse(f"{file_base()}.test2", parse_words=True)) == 281
-
-
-def file_base() -> str:
-    day = os.path.basename(__file__).split(".")[0].split("_")[1]
-    return os.path.join(os.path.dirname(__file__), "input", f"{day}")
+    data = dedent(
+        """\
+        two1nine
+        eightwothree
+        abcone2threexyz
+        xtwone3four
+        4nineeightseven2
+        zoneight234
+        7pqrstsixteen"""
+    )
+    assert solve(parse(data, parse_words=True)) == 281
 
 
 if __name__ == "__main__":
-    print(solve(parse(f"{file_base()}.input")))
-    print(solve(parse(f"{file_base()}.input", parse_words=True)))
+    print(solve(parse(read_data())))
+    print(solve(parse(read_data(), parse_words=True)))
