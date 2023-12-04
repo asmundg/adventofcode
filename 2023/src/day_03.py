@@ -70,11 +70,11 @@ def adjacent(
     return None
 
 
-def solve(symbols: Symbols):
+def solve(symbols: Symbols) -> int:
     return sum([num for symbol in symbols.values() for num in symbol.numbers])
 
 
-def solve2(symbols: Symbols):
+def solve2(symbols: Symbols) -> int:
     return sum(
         [
             symbol.numbers[0] * symbol.numbers[1]
