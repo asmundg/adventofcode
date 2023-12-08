@@ -13,8 +13,8 @@ from textwrap import dedent
 from typing import List, Tuple
 
 
-CARDS = ("A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2")
-ALT_CARDS = ("A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J")
+CARDS = "AKQJT98765432"
+ALT_CARDS = "AKQT98765432J"
 RANKS = ((5,), (1, 4), (2, 3), (1, 1, 3), (1, 2, 2), (1, 1, 1, 2), (1, 1, 1, 1, 1))
 
 
