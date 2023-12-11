@@ -21,15 +21,15 @@ from dataclasses import dataclass
 import os
 from textwrap import dedent
 
-from typing import List, Set, Tuple, Dict, TypeAlias
+from typing import List, Set, Tuple, Dict, TypeAlias, Sequence
 
 Coord: TypeAlias = Tuple[int, int]
 
 
 @dataclass
 class Sides:
-    left: List[Coord]
-    right: List[Coord]
+    left: Sequence[Coord]
+    right: Sequence[Coord]
 
 
 BOTTOM = (1, 0)
@@ -37,7 +37,7 @@ TOP = (-1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
 
-NEIGHBOURS = {
+NEIGHBOURS: Dict[str, Sequence[Coord]] = {
     "|": [TOP, BOTTOM],
     "-": [LEFT, RIGHT],
     "L": [TOP, RIGHT],
@@ -74,16 +74,14 @@ def add_coord(a: Coord, b: Coord) -> Coord:
     return (a[0] + b[0], a[1] + b[1])
 
 
-def neigh(
-    node: Tuple[int, int], pipes: Dict[Tuple[int, int], str]
-) -> List[Tuple[int, int]]:
+def neigh(node: Coord, pipes: Dict[Coord, str]) -> Sequence[Coord]:
     if node not in pipes:
         return []
 
     return [add_coord(node, c) for c in NEIGHBOURS[pipes[node]]]
 
 
-def find_loop(start: Coord, pipes: Dict[Coord, str]) -> List[Coord]:
+def find_loop(start: Coord, pipes: Dict[Coord, str]) -> Sequence[Coord]:
     for current in neigh(start, pipes):
         if start not in neigh(current, pipes):
             continue
@@ -115,7 +113,7 @@ def part1(data: str) -> int:
 # For each tile type, for each direction we came into the tile from,
 # show what's on the (relative) left and right side when navigating
 # the maze.
-LR = {
+LR: Dict[str, Dict[Coord, Sides]] = {
     "|": {
         TOP: Sides(left=[RIGHT], right=[LEFT]),
         BOTTOM: Sides(left=[LEFT], right=[RIGHT]),
@@ -153,7 +151,7 @@ def part2(data: str) -> int:
 
     # Traverse the loop, noting which open tiles we see on our left
     # and right sides
-    areas: List[Set[Coord]] = [set(), set()]
+    areas: Sequence[Set[Coord]] = [set(), set()]
     for prev, node in zip(history, history[1:-1]):
         coming_from = (prev[0] - node[0], prev[1] - node[1])
         contact = LR[pipes[node]][coming_from]
