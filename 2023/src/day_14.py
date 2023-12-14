@@ -90,8 +90,8 @@ def part2(data: str) -> int:
     cache = {}
     start_of_cycle = (-1, "")
     target = 1000000000
-    rest = 0
-    for n in range(target):
+    n = 0
+    while n < target:
         for direction in "NWSE":
             lines = tilt(lines, direction=direction)
 
@@ -101,19 +101,10 @@ def part2(data: str) -> int:
                 start_of_cycle = (n, key)
             elif start_of_cycle[1] == key:
                 cycle_length = n - start_of_cycle[0]
-                remaining = target - n
-                rest = (
-                    remaining
-                    - cycle_length * (math.floor(remaining / cycle_length))
-                    - 1
-                )
-                break
+                n += cycle_length * (math.floor((target - n) / cycle_length))
         else:
             cache[key] = lines
-
-    for _ in range(rest):
-        for direction in "NWSE":
-            lines = tilt(lines, direction=direction)
+        n += 1
 
     total = 0
     for y, line in enumerate(lines):
