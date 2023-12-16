@@ -85,15 +85,11 @@ def part2(data: str) -> int:
     largest = 0
     for y in range(len(grid)):
         for x, dx in ((-1, RIGHT), (len(grid[0]), LEFT)):
-            energized = len(energize(grid, ((y, x), dx)))
-            if energized > largest:
-                largest = energized
+            largest = max(largest, len(energize(grid, ((y, x), dx))))
 
     for x in range(len(grid[0])):
         for y, dy in ((-1, DOWN), (len(grid), UP)):
-            energized = len(energize(grid, ((y, x), dy)))
-            if energized > largest:
-                largest = energized
+            largest = max(largest, len(energize(grid, ((y, x), dy))))
 
     return largest
 
