@@ -6,7 +6,6 @@ to realize that labels and box ids are not the same thing.
 """
 
 import os
-from textwrap import dedent
 
 from typing import List, TypeAlias, Tuple
 
