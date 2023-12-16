@@ -76,7 +76,7 @@ def energize(grid: Data, start: Tuple[Coord, Coord]):
 
 def part1(data: str) -> int:
     grid = parse(data)
-    return len(energize(grid, ((0, -1), (0, 1))))
+    return len(energize(grid, ((0, -1), RIGHT)))
 
 
 def part2(data: str) -> int:
