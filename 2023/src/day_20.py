@@ -152,7 +152,7 @@ def test_part1_a():
         """
     ).strip()
 
-    assert (part1(data)) == 32000000
+    assert part1(data) == 32000000
 
 
 def test_part1_b():
