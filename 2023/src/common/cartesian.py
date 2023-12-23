@@ -12,5 +12,9 @@ def move(a: Coord, b: Coord) -> Coord:
     return (a[0] + b[0], a[1] + b[1])
 
 
-def neighbours(p: Coord):
+def neighbors(p: Coord):
     return [move(p, d) for d in (UP, DOWN, LEFT, RIGHT)]
+
+
+def is_inside(p: Coord, max_y: int, max_x: int) -> bool:
+    return 0 <= p[0] <= max_y and 0 <= p[1] <= max_x

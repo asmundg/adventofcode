@@ -36,7 +36,7 @@ def parse(data: str):
     return blocks
 
 
-def settle(blocks: Set[Tuple[Coord, Coord]]):
+def settle(blocks: Set[Tuple[Coord, Coord]]) -> Set[Tuple[Coord, Coord]]:
     filled = {}
     resting = {}
     # From lowest to highest
