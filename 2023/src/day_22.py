@@ -1,4 +1,4 @@
-"""Day 22: Sand SLabs
+"""Day 22: Sand Slabs
 
 Pretty straight forward tetris today. Part 1 and 2 are essentially the
 same, requiring us to produce a dependency graph and counting what
