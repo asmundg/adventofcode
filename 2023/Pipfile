@@ -9,6 +9,7 @@ pytest-watch = "*"
 python-lsp-server = {extras = ["all"], version = "*"}
 pylsp-mypy = "*"
 python-lsp-black = "*"
+z3-solver = "*"
 
 [requires]
 python_version = "3.11"
