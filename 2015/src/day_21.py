@@ -10,14 +10,14 @@ import itertools
 import os
 
 
-@dataclass
+@dataclass(frozen=True)
 class Character:
     hp: int
     dmg: int
     armor: int
 
 
-@dataclass
+@dataclass(frozen=True)
 class Item:
     name: str
     cost: int
@@ -39,14 +39,15 @@ def parse(data: str) -> Character:
 
 
 def combat(you: Character, boss: Character) -> bool:
-    you = Character(hp=you.hp, dmg=you.dmg, armor=you.armor)
-    boss = Character(hp=boss.hp, dmg=boss.dmg, armor=boss.armor)
+    boss_hp = boss.hp
+    you_hp = you.hp
+
     while True:
-        boss.hp -= max(you.dmg - boss.armor, 1)
-        if boss.hp <= 0:
+        boss_hp -= max(you.dmg - boss.armor, 1)
+        if boss_hp <= 0:
             return True
-        you.hp -= max(boss.dmg - you.armor, 1)
-        if you.hp <= 0:
+        you_hp -= max(boss.dmg - you.armor, 1)
+        if you_hp <= 0:
             return False
 
 
