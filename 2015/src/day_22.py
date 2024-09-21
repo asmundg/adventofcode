@@ -1,4 +1,4 @@
-"""Day 22: Wizard Simulator 20XX
+"""Day 22: Wizard Simulator 20XX.
 
 Solution finds the cheapest plan, but doesn't actually terminate in
 reasonable time. It's again a basic depth first search, with some
