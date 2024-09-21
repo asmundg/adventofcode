@@ -3,12 +3,6 @@
 Solution finds the cheapest plan, but doesn't actually terminate in
 reasonable time. It's again a basic depth first search, with some
 constraints on which edges are available from each state node.
-
-It's possible that we can do some pruning, at least for the last mile
-where it's e.g. pointless to cast recharge if we have enough mana to
-finish the run. But I don't feel like trying to find a perfect
-solution.
-
 """
 
 from dataclasses import dataclass
@@ -187,6 +181,10 @@ def part1(pc: Character, boss: Character, hard_mode: bool = False):
     while search:
         state, spell = search.pop()
         state = run_turn(state, spell)
+
+        if cheapest and state.total_mana >= cheapest:
+            continue
+
         if state.pc.hp <= 0:
             continue
 
@@ -252,5 +250,5 @@ def test_part1_b():
 
 
 if __name__ == "__main__":
-    # print(part1(Character(hp=50, mana=500), parse(read_data())))
+    print(part1(Character(hp=50, mana=500), parse(read_data())))
     print(part1(Character(hp=50, mana=500), parse(read_data()), hard_mode=True))
