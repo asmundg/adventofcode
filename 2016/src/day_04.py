@@ -1,8 +1,8 @@
 """Day 04: Security Through Obscurity
 
-Part 2 requires manual grapping, but other than that, this is fairly
-mechanical. Heavy abuse of ordered dict and sorting to get the
-frequency-then-alpha sorting right.
+Part 2 requires manual grepping to find the one human readable name,
+but other than that, this is fairly mechanical. Heavy abuse of ordered
+dict and sorting to get the frequency-then-alpha sorting right.
 
 """
 
@@ -29,7 +29,7 @@ def parse(data: str):
 
 
 def make_checksum(room):
-    name, sector, checksum = room
+    name, _sector, _checksum = room
     name = name.replace("-", "")
 
     # Count frequency by alphabetic order to ensure that things are
