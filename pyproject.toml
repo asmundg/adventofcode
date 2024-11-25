@@ -5,3 +5,7 @@ strict = true
 
 [tool.pylsp.plugins.ruff]
 enabled = true
+
+[tool.ruff]
+# Allow lines to be as long as 120.
+line-length = 120
