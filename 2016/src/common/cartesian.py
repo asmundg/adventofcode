@@ -1,6 +1,6 @@
-from typing import TypeAlias, Tuple
+from typing import TypeAlias
 
-Coord: TypeAlias = Tuple[int, int]
+Coord: TypeAlias = tuple[int, int]
 
 DOWN = (1, 0)
 UP = (-1, 0)
@@ -15,5 +15,5 @@ def move(a: Coord, b: Coord) -> Coord:
     return (a[0] + b[0], a[1] + b[1])
 
 
-def neighbors(p: Coord):
+def neighbors(p: Coord) -> list[Coord]:
     return [move(p, d) for d in (UP, DOWN, LEFT, RIGHT)]
