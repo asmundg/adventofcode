@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pylsp-mypy = "*"
+
+[requires]
+python_version = "3.12"
+
+[dev-packages]
+virtualenv = "*"
+pytest = "*"
+pytest-watch = "*"
+python-lsp-server = {extras = ["all"], version = "*"}
+ruff = "*"
+python-lsp-ruff = "*"
