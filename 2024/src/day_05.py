@@ -37,26 +37,29 @@ def parse(data: str, use_p: bool = False) -> tuple[list[Rule], list[Pages]]:
 
 
 def sort(rules: list[Rule], values: list[int]) -> list[int]:
-    before: dict[int, set[int]] = dict()
+    after: dict[int, set[int]] = dict()
     for rule in rules:
         if rule[0] not in values or rule[1] not in values:
             continue
 
-        if rule[0] not in before:
-            before[rule[0]] = set()
-        before[rule[0]].add(rule[1])
+        if rule[0] not in after:
+            after[rule[0]] = set()
+        after[rule[0]].add(rule[1])
 
-        if rule[1] not in before:
-            before[rule[1]] = set()
+        if rule[1] not in after:
+            after[rule[1]] = set()
 
-    ranked: list[int] = []
-    while before:
-        for key in list(before.keys()):
-            if all(val in ranked for val in before[key]):
-                ranked.insert(0, key)
-                before.pop(key)
+    ordered: list[int] = []
+    while after:
+        for key in list(after.keys()):
+            # If all numbers after us are already in the output, add
+            # ourselves to the front.
+            if all(val in ordered for val in after[key]):
+                ordered.insert(0, key)
+                after.pop(key)
+                break
 
-    return ranked
+    return ordered
 
 
 def part1(rules: list[Rule], page_sets: list[Pages]) -> int:
