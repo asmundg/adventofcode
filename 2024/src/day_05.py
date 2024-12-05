@@ -53,7 +53,7 @@ def sort(rules: list[Rule], values: list[int]) -> list[int]:
     while before:
         for key in list(before.keys()):
             # If all numbers before us are already in the output, add
-            # ourselves to and.
+            # ourselves to end.
             if all(val in ordered for val in before[key]):
                 ordered.append(key)
                 before.pop(key)
