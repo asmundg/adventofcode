@@ -1,6 +1,7 @@
 from typing import TypeAlias
 
 Coord: TypeAlias = tuple[int, int]
+Path: TypeAlias = tuple[Coord, ...]
 
 DOWN = (1, 0)
 UP = (-1, 0)
