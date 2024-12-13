@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pylsp-mypy = "*"
+z3-solver = "*"
 
 [requires]
 python_version = "3.12"
