@@ -71,7 +71,7 @@ def part1(robots: list[Robot], max_y: int, max_x: int) -> int:
     return quads[0] * quads[1] * quads[2] * quads[3]
 
 
-def debug(robots: set[Coord], max_y: int, max_x: int):
+def debug(robots: set[Coord], max_y: int, max_x: int) -> str:
     s = ""
     for y in range(max_y):
         for x in range(max_x):
