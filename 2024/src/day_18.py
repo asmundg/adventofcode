@@ -1,8 +1,10 @@
 """Day 18: RAM Run
 
 Straight forward BFS today. We trivially solve part 2 by reusing part
-1 and just incrementing the number of walls we drop in until we can't
-find a solution.
+1 and just decrementing the number of walls we drop in until we can
+find a solution (it's much faster if we start from the end, since
+steps to failed search should be shorter than steps to goal, unless
+the input is particularly evil).
 """
 
 import os
@@ -52,8 +54,8 @@ def part1(corrupted: list[Coord], n_bytes: int, max_y: int, max_x: int) -> int:
 
 
 def part2(corrupted: list[Coord], max_y: int, max_x: int) -> str:
-    for n in range(len(corrupted)):
-        if part1(corrupted, n + 1, max_y, max_x) == -1:
+    for n in range(len(corrupted), 0, -1):
+        if part1(corrupted, n, max_y, max_x) >= 1:
             return str(corrupted[n][0]) + "," + str(corrupted[n][1])
     raise Exception("No solution found")
 
