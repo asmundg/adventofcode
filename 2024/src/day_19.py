@@ -15,11 +15,8 @@ from textwrap import dedent
 
 @dataclass(frozen=True)
 class World:
-    towels: list[str]
-    patterns: list[str]
-
-    def __hash__(self) -> int:
-        return 1
+    towels: tuple[str, ...]
+    patterns: tuple[str, ...]
 
 
 def read_data() -> str:
@@ -32,7 +29,7 @@ def read_data() -> str:
 
 def parse(data: str) -> World:
     towels, patterns = data.split("\n\n")
-    return World(towels=towels.split(", "), patterns=patterns.split("\n"))
+    return World(towels=tuple(towels.split(", ")), patterns=tuple(patterns.split("\n")))
 
 
 @functools.cache
