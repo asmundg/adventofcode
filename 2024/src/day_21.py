@@ -216,7 +216,7 @@ def part2(codes: list[str]) -> int:
     return cost
 
 
-def test_cheats_part1() -> None:
+def test_part1() -> None:
     data = dedent("""
     029A
     980A
