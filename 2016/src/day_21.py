@@ -1,6 +1,8 @@
 """Day 21: Scrambled Letters and Hash
 
-Mechanical task with a twist. As usual, it took me a while to notice that there were some extra rules attached to the rotate by position instruction. Classic advent of code!
+Mechanical task with a twist. As usual, it took me a while to notice
+that there were some extra rules attached to the rotate by position
+instruction. Classic advent of code!
 
 Part 2 _could_ be solved with brute force, since we have a validator
 from part 1. But since most of the operations are symmetrical, we can
