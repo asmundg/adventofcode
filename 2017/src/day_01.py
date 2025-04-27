@@ -1,4 +1,7 @@
-"""Day 01:"""
+"""Day 01: Inverse Captcha
+
+Batteries included ftw!
+"""
 
 import os
 
