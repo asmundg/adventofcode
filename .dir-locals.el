@@ -1,0 +1,1 @@
+((nil . ((copilot-mode . nil))))
