@@ -12,7 +12,6 @@ where the issue is introduced.
 
 """
 
-import itertools
 import os
 from dataclasses import dataclass
 from functools import cached_property
@@ -58,6 +57,8 @@ def parse(data: str) -> Program:
     for program in programs.values():
         if program.id not in supported_by:
             return program
+
+    raise Exception("No root")
 
 
 def part1(root: Program) -> str:
