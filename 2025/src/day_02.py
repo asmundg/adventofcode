@@ -1,7 +1,8 @@
 """Day 02: Gift Shop
 
 Chunking == string slicing. As usual, remembering how indices work for
-range and slice is hard when I'm not fully awake.
+range and slice is hard when I'm not fully awake. Could also have been
+a regex.
 
 """
 
