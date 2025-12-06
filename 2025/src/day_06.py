@@ -6,8 +6,8 @@ Where is this going for part 2?
 Aah, should have paid attention to the formatting. "The left/right
 alignment of numbers within each problem can be ignored" indeed. So a
 plain split removes information and we need to actually find the
-separator column. Which we can do by just finding the first index
-where all rows have a space for each column.
+separator column. Fortunately, the numbers are right-aligned, so we
+can just scan columns from right to left.
 
 """
 
@@ -46,22 +46,13 @@ def parse2(data: str) -> list[Problem]:
     num_rows = lines[:-1]
     cursor = 0
     problems = [Problem(nums=[], op=op) for op in lines[-1].split()]
-    for p in problems:
-        start = cursor
-        for line in num_rows:
-            while cursor < len(line) and line[cursor] != " ":
-                cursor += 1
-
-        for c in range(cursor - 1, start - 1, -1):
-            num_string = ""
-            for line in num_rows:
-                if line[c] != " ":
-                    num_string += line[c]
-
-            p.nums.append(int(num_string))
-
-        # next column
-        cursor += 1
+    p = len(problems) - 1
+    for cursor in range(len(num_rows[0]) - 1, -1, -1):
+        num_string = "".join(row[cursor] for row in num_rows if row[cursor] != " ")
+        if num_string == "":
+            p -= 1
+        else:
+            problems[p].nums.append(int(num_string))
 
     return problems
 
