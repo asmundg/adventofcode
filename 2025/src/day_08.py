@@ -9,6 +9,7 @@ import math
 import operator
 import os
 import typing
+from enum import unique
 from functools import reduce
 from textwrap import dedent
 
@@ -56,11 +57,8 @@ def part1(points: set[Coord], iterations: int) -> int:
         for c in circuits[a]:
             circuits[c] = circuits[a]
 
-    final_circuits = [list(circuits.values())[0]]
-    for c in circuits.values():
-        if c not in final_circuits:
-            final_circuits.append(c)
-    return reduce(operator.mul, [len(circuit) for circuit in sorted(final_circuits, key=lambda x: len(x))][-3:])
+    final_values = set(frozenset(s) for s in circuits.values())
+    return reduce(operator.mul, [len(circuit) for circuit in sorted(final_values, key=lambda x: len(x))][-3:])
 
 
 def part2(points: set[Coord]) -> int:
