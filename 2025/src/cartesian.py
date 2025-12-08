@@ -1,6 +1,6 @@
-from typing import TypeAlias
+import typing
 
-Coord: TypeAlias = tuple[int, int]
+Coord: typing.TypeAlias = tuple[int, int]
 
 DOWN = (1, 0)
 UP = (-1, 0)
