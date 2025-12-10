@@ -1,4 +1,4 @@
-"""Day 08 Playground:
+"""Day 08: Playground
 
 To avoid N^2, we want to build the distance map up front. Then we can
 simply iterate through the list of pairs sorted by distance. We can
@@ -9,7 +9,6 @@ import math
 import operator
 import os
 import typing
-from enum import unique
 from functools import reduce
 from textwrap import dedent
 
