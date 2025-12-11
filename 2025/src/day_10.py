@@ -1,6 +1,9 @@
 """Day 10: Factory
 
-This sneakily starts out looking like a BFS, but is actually linear equations! Equations means z3-solver."""
+This sneakily starts out looking like a BFS, but is actually linear
+equations! Equations means z3-solver.
+
+"""
 
 import os
 from dataclasses import dataclass
